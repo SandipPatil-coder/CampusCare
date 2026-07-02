@@ -1,0 +1,228 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import { Complaint, Notification, AdminLog, UserProfile } from './types';
+
+export const MOCK_STUDENT: UserProfile = {
+  id: 'usr_student_101',
+  name: 'Alex Rivera',
+  email: 'sandip.patil25@pccoepune.org', // Matches the current user email!
+  avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120',
+  role: 'student',
+  department: 'Computer Science & Engineering',
+  loginTime: new Date().toLocaleString(),
+};
+
+export const MOCK_ADMIN: UserProfile = {
+  id: 'usr_admin_99',
+  name: 'Dean Marcus Vance',
+  email: 'admin.facilities@pccoe.edu',
+  avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=120',
+  role: 'admin',
+  department: 'Campus Facilities & Operations',
+  loginTime: new Date().toLocaleString(),
+};
+
+// Generates simulated timestamps relative to current time
+const daysAgo = (days: number): string => {
+  const date = new Date();
+  date.setDate(date.getDate() - days);
+  return date.toISOString();
+};
+
+export const INITIAL_COMPLAINTS: Complaint[] = [
+  {
+    id: 'CC-2026-0812',
+    title: 'Ceiling Water Leakage',
+    description: 'Significant water dripping from the ceiling plaster near the central servers. It threatens the electrical racks and networking equipment.',
+    category: 'plumbing',
+    priority: 'emergency',
+    building: 'Newton Science Block',
+    floor: '2nd Floor',
+    roomNumber: 'Room 204 (Server Closet)',
+    images: ['https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=600'],
+    status: 'in_progress',
+    createdAt: daysAgo(4), // 4 days ago -> triggers the Send Reminder (>3 days)!
+    updatedAt: daysAgo(2),
+    studentId: 'usr_student_101',
+    studentName: 'Alex Rivera',
+    studentEmail: 'sandip.patil25@pccoepune.org',
+    studentDept: 'Computer Science & Engineering',
+    remindersCount: 0,
+    adminNotes: 'Facilities dispatched plumber team. Main valve has been isolated, but ceiling plaster requires structural inspection.',
+  },
+  {
+    id: 'CC-2026-0794',
+    title: 'Air Conditioning System Failure',
+    description: 'Central air conditioning unit in the auditorium is making a grinding metal noise and blowing hot air. The space is unusable for lectures.',
+    category: 'hvac',
+    priority: 'high',
+    building: 'Raman Auditorium',
+    floor: 'Ground Floor',
+    roomNumber: 'Auditorium A',
+    images: ['https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=600'],
+    status: 'pending',
+    createdAt: daysAgo(3.5), // >3 days! Reminder eligible.
+    updatedAt: daysAgo(3.5),
+    studentId: 'usr_student_102',
+    studentName: 'Sarah Jenkins',
+    studentEmail: 'sarah.j@pccoe.edu',
+    studentDept: 'Mechanical Engineering',
+    remindersCount: 0,
+  },
+  {
+    id: 'CC-2026-0742',
+    title: 'Broken Lecture Desks & Chairs',
+    description: 'Three desks in the front row have detached table-tops and sharp exposed metal screws. Students are at risk of scratches.',
+    category: 'furniture',
+    priority: 'medium',
+    building: 'Aryabhata Academic Tower',
+    floor: '3rd Floor',
+    roomNumber: 'LH-302',
+    images: ['https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&q=80&w=600'],
+    status: 'accepted',
+    createdAt: daysAgo(8),
+    updatedAt: daysAgo(6),
+    studentId: 'usr_student_101',
+    studentName: 'Alex Rivera',
+    studentEmail: 'sandip.patil25@pccoepune.org',
+    studentDept: 'Computer Science & Engineering',
+    remindersCount: 1,
+    lastReminderAt: daysAgo(5),
+    adminNotes: 'Carpentry supervisor notified. Replacement desks ordered from main warehouse.',
+  },
+  {
+    id: 'CC-2026-0691',
+    title: 'High-Density Wi-Fi Access Point Offline',
+    description: 'The Wi-Fi access point AP-CS-04 in the main computer lab is completely offline. No wireless signal, ethernet connectivity works though.',
+    category: 'it_network',
+    priority: 'high',
+    building: 'Newton Science Block',
+    floor: '1st Floor',
+    roomNumber: 'Lab 101',
+    images: ['https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=600'],
+    status: 'resolved',
+    createdAt: daysAgo(12),
+    updatedAt: daysAgo(10),
+    studentId: 'usr_student_104',
+    studentName: 'Raj Patel',
+    studentEmail: 'raj.patel@pccoe.edu',
+    studentDept: 'Information Technology',
+    remindersCount: 0,
+    adminNotes: 'Replaced PoE injector block. Link fully restored, signal verified at 300 Mbps.',
+  },
+  {
+    id: 'CC-2026-0850',
+    title: 'Flickering LED Panel Lights',
+    description: 'The overhead lights are flickering constantly. It causes eye strain and headaches during engineering drawing classes.',
+    category: 'electrical',
+    priority: 'low',
+    building: 'Bhabha Workshop Hall',
+    floor: 'Ground Floor',
+    roomNumber: 'Drawing Hall-C',
+    images: [],
+    status: 'pending',
+    createdAt: daysAgo(1),
+    updatedAt: daysAgo(1),
+    studentId: 'usr_student_101',
+    studentName: 'Alex Rivera',
+    studentEmail: 'sandip.patil25@pccoepune.org',
+    studentDept: 'Computer Science & Engineering',
+    remindersCount: 0,
+  },
+  {
+    id: 'CC-2026-0512',
+    title: 'Damaged Safety Exit Sign',
+    description: 'The illuminated green emergency exit sign near the south stairs is cracked and completely dark.',
+    category: 'security_safety',
+    priority: 'high',
+    building: 'Aryabhata Academic Tower',
+    floor: '4th Floor',
+    roomNumber: 'Staircase B',
+    images: [],
+    status: 'resolved',
+    createdAt: daysAgo(20),
+    updatedAt: daysAgo(18),
+    studentId: 'usr_student_105',
+    studentName: 'Emily Wong',
+    studentEmail: 'emily.w@pccoe.edu',
+    studentDept: 'Civil Engineering',
+    remindersCount: 0,
+    adminNotes: 'Emergency backup battery and LED tube assembly swapped.',
+  },
+  {
+    id: 'CC-2026-0899',
+    title: 'Broken Corridor Water Fountain',
+    description: 'The main water fountain is leaking from the pressure valve and building a large pool of standing water in the corridor, posing a slipping hazard.',
+    category: 'plumbing',
+    priority: 'medium',
+    building: 'Aryabhata Academic Tower',
+    floor: 'Ground Floor',
+    roomNumber: 'Foyer',
+    images: [],
+    status: 'pending',
+    createdAt: daysAgo(0.5),
+    updatedAt: daysAgo(0.5),
+    studentId: 'usr_student_106',
+    studentName: 'David Kim',
+    studentEmail: 'david.k@pccoe.edu',
+    studentDept: 'Electronics Engineering',
+    remindersCount: 0,
+  }
+];
+
+export const INITIAL_NOTIFICATIONS: Notification[] = [
+  {
+    id: 'notif_1',
+    userId: 'usr_student_101',
+    title: 'Complaint Resolved',
+    description: 'Your complaint regarding "Wi-Fi Access Point Offline" has been resolved by IT Operations.',
+    type: 'resolved',
+    isRead: false,
+    createdAt: daysAgo(10),
+    complaintId: 'CC-2026-0691',
+  },
+  {
+    id: 'notif_2',
+    userId: 'usr_student_101',
+    title: 'Status Updated to In-Progress',
+    description: 'Your complaint regarding "Ceiling Water Leakage" has been accepted and assigned to Plumbing Service.',
+    type: 'status_updated',
+    isRead: true,
+    createdAt: daysAgo(2),
+    complaintId: 'CC-2026-0812',
+  },
+  {
+    id: 'notif_3',
+    userId: 'usr_student_101',
+    title: 'Reminder Acknowledged',
+    description: 'Your reminder request for the "Broken Lecture Desks" has been received by Facilities Admin.',
+    type: 'reminder_acknowledged',
+    isRead: false,
+    createdAt: daysAgo(5),
+    complaintId: 'CC-2026-0742',
+  },
+];
+
+export const INITIAL_ADMIN_LOGS: AdminLog[] = [
+  {
+    id: 'log_1',
+    adminId: 'usr_admin_99',
+    adminName: 'Dean Marcus Vance',
+    action: 'Status Update',
+    complaintId: 'CC-2026-0812',
+    details: 'Status changed from Pending to In Progress. Assigned to Central Plumbers Corp.',
+    createdAt: daysAgo(2),
+  },
+  {
+    id: 'log_2',
+    adminId: 'usr_admin_99',
+    adminName: 'Dean Marcus Vance',
+    action: 'Resolution logged',
+    complaintId: 'CC-2026-0691',
+    details: 'Status marked as Resolved. Access point fully responsive after PoE hardware replacement.',
+    createdAt: daysAgo(10),
+  },
+];

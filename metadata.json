@@ -1,0 +1,10 @@
+{
+  "name": "CampusCare",
+  "description": "Smart Campus Maintenance Portal for educational institutions to submit, track, and manage campus facilities issues.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

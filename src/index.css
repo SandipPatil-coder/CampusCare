@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Grotesk:wght@400;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  
+  --color-bento-bg: #f8fafc;
+  --color-bento-bg-dark: #090d16;
+  --color-bento-sidebar: #0f172a;
+  --color-bento-primary: #2563eb;
+  --color-bento-accent: #3b82f6;
+  --color-bento-text-main: #1e293b;
+  --color-bento-text-muted: #64748b;
+  --color-bento-emergency: #ef4444;
+
+  /* Remap indigo system to match Bento royal blue palette */
+  --color-indigo-50: #f0f6ff;
+  --color-indigo-100: #e0f0fe;
+  --color-indigo-200: #bae0fd;
+  --color-indigo-300: #7cc2fc;
+  --color-indigo-400: #38a5f8;
+  --color-indigo-500: #3b82f6; /* Accent blue */
+  --color-indigo-600: #2563eb; /* Primary royal blue */
+  --color-indigo-700: #1d4ed8;
+  --color-indigo-800: #1e40af;
+  --color-indigo-900: #1e3a8a;
+  --color-indigo-950: #0f172a; /* Slate/Navy */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom visual styles */
+.animate-spin-slow {
+  animation: spin 8s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Bento Grid styling overrides for high-contrast card blocks */
+
+/* 1. Base style for all card-like layouts in the app */
+/* Light Mode */
+.rounded-2xl,
+.rounded-3xl,
+.p-5.rounded-2xl.border,
+.p-6.rounded-3xl.border,
+.p-8.rounded-2xl.border {
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.03), 0 1px 3px rgba(15, 23, 42, 0.01) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Dark Mode (when dark class is active on root/top level container) */
+.dark .rounded-2xl,
+.dark .rounded-3xl,
+.dark .p-5.rounded-2xl.border,
+.dark .p-6.rounded-3xl.border,
+.dark .p-8.rounded-2xl.border {
+  background: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.22) !important;
+}
+
+/* Card hover animation with bento glow */
+.rounded-2xl:hover,
+.rounded-3xl:hover,
+.p-5.rounded-2xl.border:hover,
+.p-6.rounded-3xl.border:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.07), 0 2px 6px rgba(15, 23, 42, 0.03) !important;
+  border-color: rgba(37, 99, 235, 0.25) !important;
+}
+
+.dark .rounded-2xl:hover,
+.dark .rounded-3xl:hover,
+.dark .p-5.rounded-2xl.border:hover,
+.dark .p-6.rounded-3xl.border:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45) !important;
+  border-color: rgba(59, 130, 246, 0.3) !important;
+}
+
+/* Global Background color enhancements */
+.bg-slate-50 {
+  background-color: #f1f5f9 !important; /* Elegant light bento bg */
+}
+.bg-slate-950 {
+  background-color: #090d16 !important; /* Premium deep dark bento bg */
+}
+
+/* Accent borders and backgrounds matching Bento Grid specification */
+.border-slate-200 {
+  border-color: rgba(226, 232, 240, 0.8) !important;
+}
+.border-slate-800 {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Emergency Banner */
+.bento-emergency-banner {
+  border-left: 4px solid var(--color-bento-emergency) !important;
+  background-color: #fef2f2 !important;
+  color: #1e293b !important;
+}
+.dark .bento-emergency-banner {
+  border-left: 4px solid var(--color-bento-emergency) !important;
+  background-color: rgba(239, 68, 68, 0.08) !important;
+  border-color: rgba(239, 68, 68, 0.2) !important;
+}
+
+/* Custom Table Design */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th {
+  text-align: left;
+  font-size: 0.75rem;
+  color: var(--color-bento-text-muted);
+  text-transform: uppercase;
+  padding: 10px 12px !important;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+}
+.dark th {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+td {
+  padding: 12px !important;
+  font-size: 0.85rem;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+}
+.dark td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.15);
+}
