@@ -7,26 +7,45 @@ export type Role = 'student' | 'admin';
 
 export type Priority = 'low' | 'medium' | 'high' | 'emergency';
 
-export type Category = 
-  | 'electrical' 
-  | 'plumbing' 
-  | 'hvac' 
-  | 'furniture' 
-  | 'it_network' 
-  | 'janitorial' 
-  | 'security_safety' 
+export type Category =
+  | 'electrical'
+  | 'plumbing'
+  | 'carpentry'
+  | 'cleanliness'
+  | 'internet'
+  | 'classroom'
+  | 'laboratory'
+  | 'hostel'
+  | 'water'
+  | 'security'
   | 'other';
 
 export type ComplaintStatus = 'pending' | 'accepted' | 'in_progress' | 'resolved';
 
 export interface UserProfile {
   id: string;
+
+  // Personal Information
   name: string;
   email: string;
+  prn: string;
+  mobile: string;
+
+  // Academic Details
+  department: string;
+  year: string;
+  division: string;
+
+  // Profile
   avatar?: string;
   role: Role;
-  department?: string;
+
+  // Status
+  profileCompleted: boolean;
   loginTime?: string;
+
+  // Admin only
+  designation?: string;
 }
 
 export interface Complaint {
@@ -38,8 +57,8 @@ export interface Complaint {
   building: string;
   floor: string;
   roomNumber: string;
-  images: string[]; // Base64 or Object URLs
-  voiceUrl?: string; // Base64 or Blob URL
+  images?: string[];
+  voiceUrl?: string;
   status: ComplaintStatus;
   createdAt: string;
   updatedAt: string;
@@ -50,6 +69,8 @@ export interface Complaint {
   remindersCount: number;
   lastReminderAt?: string;
   adminNotes?: string;
+  assignedTo?: string;
+  resolvedAt?: string;
 }
 
 export interface Reminder {
